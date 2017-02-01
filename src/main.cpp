@@ -7,7 +7,7 @@ Created by PlasmaLotus
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <SFML\Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include "main.h"
 #include "Game\Level.h"
 
@@ -33,8 +33,6 @@ int main(int argc, char **argv) {
 				window.close();
 		}
 	}
-
-
 
 	return 0;
 }

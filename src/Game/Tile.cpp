@@ -4,6 +4,22 @@ Tile::Tile()
 {
 }
 
+Tile::Tile(int tID, double ang, bool isItWater) :
+	tileID(tID),
+	angle(ang),
+	water(isItWater)
+{
+}
+
+//Tile::Tile()
+
 Tile::~Tile()
 {
 }
+
+bool Tile::isWater()
+{
+	return water;
+}
+
+
