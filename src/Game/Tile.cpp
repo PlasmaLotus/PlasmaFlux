@@ -11,7 +11,7 @@ Tile::Tile(int tID, double ang, bool isItWater) :
 {
 }
 
-//Tile::Tile()
+
 
 Tile::~Tile()
 {
@@ -22,4 +22,6 @@ bool Tile::isWater()
 	return water;
 }
 
-
+bool Tile::collidable() {
+	return !isWater();
+}

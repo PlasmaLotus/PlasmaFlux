@@ -10,6 +10,7 @@ Created by PlasmaLotus
 #include <SFML/Graphics.hpp>
 #include "main.h"
 #include "Game\Level.h"
+#include "Game\Game.h"
 
 void test();
 int main(int argc, char **argv) {
@@ -17,22 +18,11 @@ int main(int argc, char **argv) {
 	Level l;
 	l.loadLevel("assets/levels/test.lvl");
 	l.initLevel();
+	sf::RenderWindow lul(sf::VideoMode(240, 160), "PlasmaFlux");
+	Game game(lul);
+	//GameRenderer renderer;
+	game.run();
 
-	//sf::RenderWindow window;
-	sf::Window window(sf::VideoMode(240, 160), "My window");
-
-	// run the program as long as the window is open
-	while (window.isOpen())
-	{
-		// check all the window's events that were triggered since the last iteration of the loop
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			// "close requested" event: we close the window
-			if (event.type == sf::Event::Closed)
-				window.close();
-		}
-	}
 
 	return 0;
 }

@@ -1,5 +1,6 @@
 #include "Level.h"
 
+
 Level::Level():
 levelHeight(0),
 levelWidth(0),
@@ -75,8 +76,9 @@ bool Level::loadLevel(std::string levelName) {
 						/**/
 						if (levelHeight > 0 && levelWidth > 0)
 						{
-							initTileset();
-
+							initTileset();///Initiate Tileset Here
+							initColTileset();
+							/*setThe Tileset here*/
 							std::string tileText = text;
 							for (int i = 0; i < levelWidth; i++) {
 								for (int j = 0; j < levelHeight; j++) {
@@ -89,6 +91,7 @@ bool Level::loadLevel(std::string levelName) {
 									{
 										//tileset[i][j] = new Tile();
 										createTile(i, j);
+										colTileset[i][j] = true;
 									}
 									std::getline(file, tileText);
 								}
@@ -140,9 +143,6 @@ bool Level::loadLevel(std::string levelName) {
 
 				}
 			}
-			
-
-
 
 		}
 
@@ -162,6 +162,24 @@ bool Level::initLevel() {
 
 
 	return false;
+}
+
+Tile * Level::getTile(int x, int y)
+{
+	if (tileset[x][y] != NULL)
+	{
+		return tileset[x][y];
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
+bool Level::getColTile(int x, int y)
+{
+	//return colTileset[x][y];
+	return tileset[x][y]->collidable();
 }
 
 void Level::initTileset()
@@ -184,20 +202,7 @@ void Level::initTileset()
 }
 
 void Level::testInit() {
-	for (int i = 0; i < levelWidth; i++) {
-		for (int j = 0; j < levelHeight; j++) {
-			if (tileset[i][j] != NULL)
-			{
-				//if there is a tile
-				printf("1");
-			}
-			else
-			{
-				printf("0");
-			}
-		}
-		printf("\n");
-	}
+
 }
 
 void Level::createTile(int x, int y)
@@ -209,4 +214,23 @@ void Level::clearTile(int x, int y)
 {
 	if (tileset[x][y] != NULL)
 		delete tileset[x][y];
+}
+
+bool **Level::getCollisionTiles(){
+	return colTileset;
+}
+void Level::initColTileset(){
+	colTileset = (bool**)malloc(levelHeight* sizeof(bool*));
+	for (int i = 0; i < levelHeight; i++)
+	{
+		colTileset[i] = (bool*)malloc(levelHeight* sizeof(bool));
+	}
+
+	for (int i = 0; i < levelWidth; i++) {
+		for (int j = 0; j < levelHeight; j++) {
+			//tileset[i][j] = (Tile*)malloc;
+			//init all of them to null
+			colTileset[i][j] = false;
+		}
+	}
 }
