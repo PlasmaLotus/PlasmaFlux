@@ -17,6 +17,7 @@ public:
 	void setAngle(double a);
 	double getAngle();
 	bool collidable();
+	int getID();
 	bool isWater();
 
 	enum TileType{SolidBlock, PassThrough, Air, Slope};

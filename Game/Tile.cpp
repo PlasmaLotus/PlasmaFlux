@@ -22,6 +22,15 @@ bool Tile::isWater()
 	return water;
 }
 
+double Tile::getAngle()
+{
+	return angle;
+}
+
 bool Tile::collidable() {
 	return !isWater();
+}
+
+int Tile::getID() {
+	return tileID;
 }

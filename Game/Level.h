@@ -45,5 +45,8 @@ private:
 	Tile ***tileset;
 	bool **colTileset;
 	
+	int playerSpawnPosX = 0;
+	int playerSpawnPosY = 0;
+
 };
 #endif

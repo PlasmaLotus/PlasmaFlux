@@ -10,8 +10,8 @@ Level::~Level(){
 	
 	if (initiated)
 	{
-		for (int i = 0; i < levelWidth; i++) {
-			for (int j = 0; j < levelHeight; j++) {
+		for (int i = 0; i < levelHeight; i++) {
+			for (int j = 0; j < levelWidth; j++) {
 				//tileset[i][j] = (Tile*)malloc;
 				//delete tileset[i][j];
 				if (tileset[i][j] != NULL)
@@ -19,14 +19,17 @@ Level::~Level(){
 					clearTile(i, j);
 					//free(tileset[i][j]);
 				}
+				
 
 			}
 		}
 		for (int i = 0; i < levelHeight; i++)
 		{
 			free(tileset[i]);
+			delete colTileset[i];
 		}
 		free(tileset);
+		delete colTileset;
 	}
 }
 
@@ -76,6 +79,9 @@ bool Level::loadLevel(std::string levelName) {
 						/**/
 						if (levelHeight > 0 && levelWidth > 0)
 						{
+							bool water = false;
+							int id = 0;
+							float angle = 0;
 							initTileset();///Initiate Tileset Here
 							initColTileset();
 							/*setThe Tileset here*/
@@ -86,12 +92,49 @@ bool Level::loadLevel(std::string levelName) {
 									{
 										break;
 									}
+									water = false;
+									id = 0;
+									angle = 0;
 
-									if (tileText.find("block")!= std::string::npos)
+									//if (tileText.find("block")!= std::string::npos)
+									if (tileText.at(0) == '1')
 									{
 										//tileset[i][j] = new Tile();
-										createTile(i, j);
+										//Create a tile at this position
+										if (tileText.find("w") != std::string::npos)
+										{
+											water = true;
+										}
+
+										if (tileText.find("x") != std::string::npos)
+										{
+											int tt = tileText.find("x") +1;
+											int tf = tileText.find_first_of(" ", tt);
+											//std::string idT
+											id = atoi(tileText.substr(tt, tf).c_str());
+										}
+
+										if (tileText.find("o") != std::string::npos)
+										{
+											int tt = tileText.find("o") +1;
+											int tf = tileText.find_first_of(" ", tt);
+											//std::string idT
+											angle = atof(tileText.substr(tt, tf).c_str());
+							
+										}
+
+										//createTile(i, j);
+										tileset[i][j] = new Tile(id, angle, water);
 										colTileset[i][j] = true;
+									}
+									else if (tileText.at(0) == '0') {
+										if (tileText.find("w") != std::string::npos)
+										{
+											water = true;
+											tileset[i][j] = new Tile(0, 0, water);
+											colTileset[i][j] = true;
+										}
+
 									}
 									std::getline(file, tileText);
 								}
@@ -178,8 +221,17 @@ Tile * Level::getTile(int x, int y)
 
 bool Level::getColTile(int x, int y)
 {
-	//return colTileset[x][y];
-	return tileset[x][y]->collidable();
+	return colTileset[x][y];
+	/*
+	if (tileset[x][y] != NULL)
+	{
+		return tileset[x][y]->collidable();
+	}
+	else
+	{
+		return false;
+	}
+	*/
 }
 
 void Level::initTileset()
@@ -187,11 +239,11 @@ void Level::initTileset()
 	tileset = (Tile***)malloc(levelHeight* sizeof(Tile**));
 	for (int i = 0; i < levelHeight; i++)
 	{
-		tileset[i] = (Tile**)malloc(levelHeight* sizeof(Tile*));
+		tileset[i] = (Tile**)malloc(levelWidth* sizeof(Tile*));
 	}
 
-	for (int i = 0; i < levelWidth; i++) {
-		for (int j = 0; j < levelHeight; j++) {
+	for (int i = 0; i < levelHeight; i++) {
+		for (int j = 0; j < levelWidth; j++) {
 			//tileset[i][j] = (Tile*)malloc;
 			//init all of them to null
 			tileset[i][j] = NULL;
@@ -223,11 +275,11 @@ void Level::initColTileset(){
 	colTileset = (bool**)malloc(levelHeight* sizeof(bool*));
 	for (int i = 0; i < levelHeight; i++)
 	{
-		colTileset[i] = (bool*)malloc(levelHeight* sizeof(bool));
+		colTileset[i] = (bool*)malloc(levelWidth* sizeof(bool));
 	}
 
-	for (int i = 0; i < levelWidth; i++) {
-		for (int j = 0; j < levelHeight; j++) {
+	for (int i = 0; i < levelHeight; i++) {
+		for (int j = 0; j < levelWidth; j++) {
 			//tileset[i][j] = (Tile*)malloc;
 			//init all of them to null
 			colTileset[i][j] = false;

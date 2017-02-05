@@ -10,14 +10,17 @@ Created by PlasmaLotus
 #include <SFML\Graphics.hpp>
 #include "main.h"
 #include "Game\Level.h"
+#include "Game\Game.h"
+#include "Renderer\GameRenderer.h"
+#include "States\StateManager.h"
 
 void test();
 int main(int argc, char **argv) {
 
-	Level l;
-	l.loadLevel("assets/levels/test.lvl");
-	l.initLevel();
-
+	//Level l;
+	//l.loadLevel("assets/levels/test.lvl");
+	//l.initLevel();
+	//test();
 	/*
 	//sf::RenderWindow window;
 	sf::Window window(sf::VideoMode(240, 160), "My window");
@@ -35,18 +38,22 @@ int main(int argc, char **argv) {
 		}
 	}
 	*/
-	sf::RenderWindow lul(sf::VideoMode(240, 160), "PlasmaFlux");
-	Game game(lul);
-	game.run();
+
+	StateManager stateMg;
+	stateMg.run();
 
 
 	return 0;
 }
 
 void test() {
+	Level level;
+	level.loadLevel("assets/levels/test.lvl");
+	/*
 	for (int i = 0; i < 50000; i++)
 	{
 		Level levelTest;
 		levelTest.loadLevel("assets/levels/test.lvl");
 	}
+	*/
 }

@@ -21,7 +21,7 @@ void GameRenderer::render() {
 }
 void GameRenderer::render(Level &level) {
 	clear();
-	//_draw(level);
+	_draw(level);
 	draw();
 	display();
 
@@ -38,22 +38,13 @@ void GameRenderer::draw() {
 }
 
 void GameRenderer::_drawLevel() {
-
 	Level *lvl = game->getLevel();
 	for (int i = 0; i < lvl->levelHeight; i++) {
 		for (int j = 0; j < lvl->levelWidth; j++) {
 			if (lvl->getColTile(i, j))
 			{
 				//if there is a tile
-				//printf("%d", lvl->getTile(i, j)->getID());
-				//printf("%f", lvl->getTile(i, j)->getAngle());
-
-				if (lvl->getTile(i, j)->isWater())
-				{
-					printf("0");
-				}
-				else
-					printf("1");
+				printf("0");
 			}
 			else
 			{
@@ -66,7 +57,7 @@ void GameRenderer::_drawLevel() {
 }
 
 void GameRenderer::_drawCharacters() {
-	Player player = game->getPlayer();
+
 }
 
 void GameRenderer::display() {
