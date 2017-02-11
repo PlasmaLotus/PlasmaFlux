@@ -10,17 +10,20 @@ GameState::GameState(sf::RenderWindow *w):
 	renderer = new GameRenderer();
 	renderer->addGame(game);
 	renderer->addWindow(window);
+	p1Controller = new Controller(game->getPlayer());
 }
 
 GameState::~GameState()
 {
 	delete game;
 	delete renderer;
+	delete p1Controller;
 }
 
 void GameState::tick()
 {
 	//getinput here
+	p1Controller->handleInput();
 	game->tick();
 	renderer->render();
 }

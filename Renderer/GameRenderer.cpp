@@ -1,4 +1,5 @@
 #include "GameRenderer.h"
+#include "../main.h"
 GameRenderer::GameRenderer() {
 
 }
@@ -28,7 +29,8 @@ void GameRenderer::render(Level &level) {
 }
 
 void GameRenderer::clear() {
-	system("cmd /c cls");
+	//system("cmd /c cls");
+	gotoxy(0, 0);
 }
 void GameRenderer::draw() {
 	_drawLevel();
@@ -38,11 +40,17 @@ void GameRenderer::draw() {
 }
 
 void GameRenderer::_drawLevel() {
-
+	Player *player = game->getPlayer();
 	Level *lvl = game->getLevel();
+
+	int plX = player->getPrevXPos() / 16;
+	int plY = player->getPrevYPos() / 16;
 	for (int i = 0; i < lvl->levelHeight; i++) {
 		for (int j = 0; j < lvl->levelWidth; j++) {
-			if (lvl->getColTile(i, j))
+			if (plY == i && plX == j) {
+				printf("P");
+			}
+			else if (lvl->getColTile(i, j))
 			{
 				//if there is a tile
 				//printf("%d", lvl->getTile(i, j)->getID());
@@ -50,14 +58,14 @@ void GameRenderer::_drawLevel() {
 
 				if (lvl->getTile(i, j)->isWater())
 				{
-					printf("0");
+					printf("o");
 				}
 				else
 					printf("1");
 			}
 			else
 			{
-				printf(" ");
+				printf("_");
 			}
 
 		}
@@ -66,7 +74,8 @@ void GameRenderer::_drawLevel() {
 }
 
 void GameRenderer::_drawCharacters() {
-	Player player = game->getPlayer();
+	Player *player = game->getPlayer();
+	
 }
 
 void GameRenderer::display() {

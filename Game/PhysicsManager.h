@@ -3,14 +3,15 @@
 #define __Physics_Manager__
 
 #include "Player.h"
-
+#include "Level.h"
 class PhysicsManager{
 public:
 	PhysicsManager();
 	~PhysicsManager();
-	void handlePlayerPhysics(Player p);
+	void handlePlayerPhysics(Player &p, Level &lvl);
 private:
-
+	Level * lvl;
+	const int TILESIZE = 16;
 };
 
 #endif

@@ -19,7 +19,7 @@ public:
 	void tick();
 	
 	Level *getLevel();
-	Player getPlayer();
+	Player *getPlayer();
 
 
 private:

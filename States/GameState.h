@@ -5,6 +5,7 @@
 #include "../Game/Game.h"
 #include "../Renderer/GameRenderer.h"
 #include "SFML\Graphics.hpp"
+#include "../Controller/Controller.h"
 class GameState : public State {
 public:
 	GameState(sf::RenderWindow *w);
@@ -16,7 +17,7 @@ private:
 	Game *game;
 	GameRenderer *renderer;
 	sf::RenderWindow *window;
-	//Controller p1Controller;
+	Controller *p1Controller;
 
 };
 

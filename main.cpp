@@ -5,8 +5,7 @@ Created by PlasmaLotus
 29/01/2017
 */
 
-#include <stdlib.h>
-#include <stdio.h>
+
 #include <SFML\Graphics.hpp>
 #include "main.h"
 #include "Game\Level.h"
@@ -39,8 +38,8 @@ int main(int argc, char **argv) {
 	}
 	*/
 
-	StateManager stateMg;
-	stateMg.run();
+	StateManager stMng;
+	stMng.run();
 
 
 	return 0;
@@ -56,4 +55,13 @@ void test() {
 		levelTest.loadLevel("assets/levels/test.lvl");
 	}
 	*/
+}
+
+void gotoxy(int x, int y)
+{
+	static HANDLE h = NULL;
+	if (!h)
+		h = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD c = { x, y };
+	SetConsoleCursorPosition(h, c);
 }

@@ -2,8 +2,8 @@
 #define __Game_Renderer__
 
 #include "SFML\Graphics.hpp"
-#include "Level.h"
-#include "Game.h"
+#include "../Game/Level.h"
+#include "../Game/Game.h"
 #include <stdio.h>
 class GameRenderer {
 public:
