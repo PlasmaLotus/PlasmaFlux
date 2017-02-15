@@ -28,13 +28,14 @@ public:
 	bool **getCollisionTiles();
 
 	
-
+	//enum TileType {NoTile, Solid, Slope, OneWay, Water, Ladder};
 	enum levelAttributes { Dimensions, ScrollLock, AutoScroll, Tiles };
 private:
 
 	struct TileInfo{
 		Tile *tile;
 		TileAnimator *tAnimator;
+		//TileType type;
 		//spawnpoint
 	};
 	bool initiated;

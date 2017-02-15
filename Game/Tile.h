@@ -3,12 +3,14 @@
 #define __Tile__
 
 //#include <SFML\Graphics.hpp>
-
+enum TileBound { Top, Bottom, East, West };//East = Right
+enum TileType { SolidBlock, PassThrough, Air, Slope };
 class Tile {
 public:
 
 	Tile();
 	Tile(int tID, double angle = 0.0, bool isItWater = false);
+	Tile(int tID, TileType ty = TileType::SolidBlock, double ang = 0.0, bool isItWater = false);
 	~Tile();
 
 	//sf::Sprite getTexture();
@@ -16,11 +18,13 @@ public:
 	//void setSprite(sf::Sprite s);
 	void setAngle(double a);
 	double getAngle();
+	TileType getType();
 	bool collidable();
+	bool collidable(TileBound b);
 	int getID();
 	bool isWater();
-
-	enum TileType{SolidBlock, PassThrough, Air, Slope};
+	
+	
 	
 
 private:
@@ -28,5 +32,9 @@ private:
 	double angle;
 	int tileID;
 	bool water;
+	TileType type;
+
+	/*Represents if there is a collision possible on those bounds*/
+	bool boundsUp, boundsDown, boundsLeft, boundsRight;//true means a collision is possible
 };
 #endif

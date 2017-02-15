@@ -84,6 +84,7 @@ bool Level::loadLevel(std::string levelName) {
 							bool water = false;
 							int id = 0;
 							float angle = 0;
+							TileType type = TileType::SolidBlock;
 							initTileset();///Initiate Tileset Here
 							initColTileset();
 							/*setThe Tileset here*/
@@ -98,6 +99,8 @@ bool Level::loadLevel(std::string levelName) {
 									id = 0;
 									angle = 0;
 
+									/*Finding quotes in the text*/
+									// 1 means there is a tile
 									//if (tileText.find("block")!= std::string::npos)
 									if (tileText.at(0) == '1')
 									{
@@ -105,11 +108,13 @@ bool Level::loadLevel(std::string levelName) {
 										//Create a tile at this position
 										if (tileText.find("w") != std::string::npos)
 										{
+											//tile Water
 											water = true;
 										}
 
 										if (tileText.find("x") != std::string::npos)
 										{
+											//tile ID
 											int tt = tileText.find("x") +1;
 											int tf = tileText.find_first_of(" ", tt);
 											//std::string idT
@@ -118,12 +123,26 @@ bool Level::loadLevel(std::string levelName) {
 
 										if (tileText.find("o") != std::string::npos)
 										{
+											//tile Angle
 											int tt = tileText.find("o") +1;
 											int tf = tileText.find_first_of(" ", tt);
 											//std::string idT
 											angle = atof(tileText.substr(tt, tf).c_str());
-							
 										}
+										if (tileText.find("t") != std::string::npos) {
+											int tt = tileText.find("o") + 1;
+											int tf = tileText.find_first_of(" ", tt);
+											//std::string typeText = tileText.substr(tt, tf);
+											int lul = atoi(tileText.substr(tt, tf).c_str());
+											/*
+											switch (lul)
+											{
+											case 1:
+												type = 
+											}
+											*/
+										}
+
 
 										//createTile(i, j);
 										tileset[i][j] = new Tile(id, angle, water);

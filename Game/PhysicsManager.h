@@ -4,10 +4,12 @@
 
 #include "Player.h"
 #include "Level.h"
+#include "Tile.h"
 class PhysicsManager{
 public:
 	PhysicsManager();
 	~PhysicsManager();
+	void _handlePlayerPhysics(Player & p, Level & lvl);
 	void handlePlayerPhysics(Player &p, Level &lvl);
 private:
 	Level * lvl;
