@@ -19,17 +19,19 @@ Level::~Level(){
 					clearTile(i, j);
 					//free(tileset[i][j]);
 				}
-				
-
 			}
 		}
 		for (int i = 0; i < levelHeight; i++)
 		{
 			free(tileset[i]);
 			delete colTileset[i];
+
+			free(tileSet_[i]);
 		}
 		free(tileset);
 		delete colTileset;
+
+		free(tileSet_);
 	}
 }
 
@@ -125,6 +127,8 @@ bool Level::loadLevel(std::string levelName) {
 
 										//createTile(i, j);
 										tileset[i][j] = new Tile(id, angle, water);
+										tileSet_[i][j].tile = new Tile(id, angle, water);
+										tileSet_[i][j].tAnimator = new TileAnimator();
 										colTileset[i][j] = true;
 									}
 									else if (tileText.at(0) == '0') {
@@ -132,6 +136,8 @@ bool Level::loadLevel(std::string levelName) {
 										{
 											water = true;
 											tileset[i][j] = new Tile(0, 0, water);
+											tileSet_[i][j].tile = new Tile(0, 0, water);
+											tileSet_[i][j].tAnimator = new TileAnimator();
 											colTileset[i][j] = true;
 										}
 
@@ -221,7 +227,10 @@ Tile * Level::getTile(int x, int y)
 
 bool Level::getColTile(int x, int y)
 {
-	return colTileset[x][y];
+	if (x < 0 || x >= levelWidth || y < 0 || y >= levelHeight)
+		return true;
+	else
+		return colTileset[x][y];
 	/*
 	if (tileset[x][y] != NULL)
 	{
@@ -241,12 +250,27 @@ void Level::initTileset()
 	{
 		tileset[i] = (Tile**)malloc(levelWidth* sizeof(Tile*));
 	}
-
 	for (int i = 0; i < levelHeight; i++) {
 		for (int j = 0; j < levelWidth; j++) {
 			//tileset[i][j] = (Tile*)malloc;
 			//init all of them to null
 			tileset[i][j] = NULL;
+		}
+	}
+
+
+
+	tileSet_ = (TileInfo**)malloc(levelHeight* sizeof(TileInfo*));
+	for (int i = 0; i < levelHeight; i++)
+	{
+		tileSet_[i] = (TileInfo*)malloc(levelWidth* sizeof(TileInfo));
+	}
+	for (int i = 0; i < levelHeight; i++) {
+		for (int j = 0; j < levelWidth; j++) {
+			//tileset[i][j] = (Tile*)malloc;
+			//init all of them to null
+			tileSet_[i][j].tAnimator = NULL;
+			tileSet_[i][j].tile = NULL;
 		}
 	}
 
@@ -260,17 +284,25 @@ void Level::testInit() {
 void Level::createTile(int x, int y)
 {
 	tileset[x][y] = new Tile();
+	tileSet_[x][y].tile = new Tile();
+	tileSet_[x][y].tAnimator = new TileAnimator();
 }
 
 void Level::clearTile(int x, int y)
 {
 	if (tileset[x][y] != NULL)
 		delete tileset[x][y];
+
+	if (tileSet_[x][y].tAnimator != NULL)
+		delete(tileSet_[x][y].tAnimator);
+	if (tileSet_[x][y].tile != NULL)
+		delete(tileSet_[x][y].tile);
 }
 
 bool **Level::getCollisionTiles(){
 	return colTileset;
 }
+
 void Level::initColTileset(){
 	colTileset = (bool**)malloc(levelHeight* sizeof(bool*));
 	for (int i = 0; i < levelHeight; i++)

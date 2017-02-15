@@ -8,9 +8,29 @@ game(NULL),
 window(NULL){
 	window = w;
 	game = g;
+	mainView.reset(sf::FloatRect(0, 0, originalWindowWidth, originalWindowHeight));
+	window->setView(mainView);
+	loadTextures();
+	spriteSizeX = game->getLevel()->TILESIZEX;
+	spriteSizeY = game->getLevel()->TILESIZEY;
 }
 GameRenderer::~GameRenderer() {
 
+}
+
+bool GameRenderer::loadTextures() {
+	//windowTexture.set
+	//backgroundSprite.setScale()
+	if (!backgroundTexture.loadFromFile("assets/images/bg1.png"))
+	{
+		printf("ripBG");
+		return false;
+	}
+	if (!tilesTexture.loadFromFile("assets/images/blocks.png"))
+	{
+		printf("ripBlocks");
+		return false;
+	}
 }
 
 void GameRenderer::render() {
@@ -36,7 +56,31 @@ void GameRenderer::draw() {
 	_drawLevel();
 	_drawCharacters();
 
+}
 
+void GameRenderer::setTilesTextures() {
+
+}
+
+void GameRenderer::setCenter() {
+	Vec *pos = game->getPlayer()->getPrevPos();
+	float centerX, centerY;
+	if (pos->x < mainView.getSize().x / 2)
+		centerX = mainView.getSize().x / 2;
+	else if (pos->x > game->getLevel()->levelWidth*spriteSizeX - mainView.getSize().x / 2)
+		centerX = game->getLevel()->levelWidth*spriteSizeX - mainView.getSize().x / 2;
+	else
+		centerX = pos->x;
+	
+	
+	if (pos->y < mainView.getSize().y / 2)
+		centerY = mainView.getSize().y / 2;
+	else if (pos->y > game->getLevel()->levelHeight*spriteSizeY - mainView.getSize().y / 2)
+		centerY = game->getLevel()->levelHeight*spriteSizeY - mainView.getSize().y / 2;
+	else
+		centerY = pos->y;
+
+	mainView.setCenter({ centerX, centerY });
 }
 
 void GameRenderer::_drawLevel() {
@@ -71,6 +115,10 @@ void GameRenderer::_drawLevel() {
 		}
 		printf("\n");
 	}
+
+	/*Test*/
+
+
 }
 
 void GameRenderer::_drawCharacters() {

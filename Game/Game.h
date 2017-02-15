@@ -31,7 +31,7 @@ private:
 	const int FPS = 60;
 
 	Player player;
-	
+	int frame = 0;
 
 	void render();
 };

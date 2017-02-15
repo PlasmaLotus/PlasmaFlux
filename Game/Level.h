@@ -6,6 +6,7 @@
 #include <string.h>
 #include <string>
 #include "Tile.h"
+#include "../Animator/TileAnimator.h"
 
 
 class Level {
@@ -32,7 +33,8 @@ public:
 private:
 
 	struct TileInfo{
-		Tile tile;
+		Tile *tile;
+		TileAnimator *tAnimator;
 		//spawnpoint
 	};
 	bool initiated;
@@ -42,6 +44,7 @@ private:
 	void clearTile(int x, int y);
 	void testInit();
 
+	TileInfo **tileSet_;
 	Tile ***tileset;
 	bool **colTileset;
 	

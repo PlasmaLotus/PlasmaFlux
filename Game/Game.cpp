@@ -10,7 +10,8 @@ Game::~Game() {
 void Game::init() {
 	//renderer;
 	level.loadLevel("assets/levels/debug.lvl");
-	player.setPosition(16, 16);
+	player.init(32, 32);
+	//player.setPosition(32, 32);
 }
 Level *Game::getLevel()
 {
@@ -23,6 +24,7 @@ Player *Game::getPlayer() {
 
 void Game::tick() {
 	physics.handlePlayerPhysics(player, level);
+	frame++;
 }
 void Game::render() {
 	//renderer.render(level);

@@ -20,24 +20,28 @@ public:
 	Player();
 	~Player();
 	void tick();
-	enum State{Idle, Walking, Running, Jumping, Landing};
-	enum AirState{FreeFalling, MaxFalling};
+	enum MovementState{Idle, Walking, Running};
+	enum AirState { Grounded, Jumping, Airborne, Falling, MaxFalling, Landing };
+	//enum AirState{FreeFalling, MaxFalling};
 
+	void init(float x, float y);
 	void setPosition(float x, float y);
 	void movePosition(float x, float y);
-	void setYSpeed(float speed);
+
+	//void setYSpeed(float speed);
+	
 	Vec *getNextPos();
 	float getNextXPos();
 	float getNextYPos();
 	Vec *getPrevPos();
 	float getPrevXPos();
+	float getPrevYPos();
 	Bounds getNextBounds();
 	Bounds getPrevBounds();
 	int getBBoxSizeX();
 	int getBBoxSizeY();
 	void isOnGround(bool b);
-	float getPrevYPos();
-	bool i;
+	
 	void left();
 	void right();
 	void up();
@@ -52,8 +56,21 @@ private:
 	bool isJumping();
 	bool isJmping = false;
 	bool onGround = false;
+	bool facingRight = true;
+	MovementState xState = Idle;
+	AirState yState = Grounded;
 	
-	const float jmp = -11.0;//-6.0;//-6.0;
+	/*Constants*/
+	const float xAccel = 0.046875;
+	const float xDecel = 0.45;//0.5;
+
+	const float baseFriction = 0.046875;
+	const float waterFriction = 0.125;
+	const float iceFriction = 0.016875;
+
+	const float topRunSpeed = 6.0;
+	const float topWalkSpeed = 4.0;
+	const float jmp = -6.0;//-11.0;
 	const float topWalkingSpeed = 3.0;
 	const float topXSpeed = 6.0;
 	const float topYSpeed = 2.0;//speed down 6 for kirby(at 30f/s), 16 for Sonic

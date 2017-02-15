@@ -7,7 +7,10 @@ Player::~Player(){
 
 }
 
-
+void Player::init(float x, float y) {
+	nextPos = { x, y };
+	prevPos = { x, y };
+}
 void Player::setPosition(float x, float y) {
 	nextPos = { x, y };
 	//prevPos = { x, y };
@@ -18,9 +21,11 @@ void Player::movePosition(float x, float y) {
 	nextPos.y += y;
 }
 
+/*
 void Player::setYSpeed(float speed) {
 	ySpeed = speed;
 }
+*/
 
 void Player::tick() {
 	//onGround = false;
@@ -44,17 +49,28 @@ void Player::tick() {
 		jumpAccel  = jumpAccel *3 /4;
 	}
 	*/
-
-	ySpeed += gravity;
+	if (xState == Idle) {
+		if (facingRight) {
+			xSpeed -= baseFriction;
+			if (xSpeed <= 0) {
+				xSpeed = 0.0;
+			}
+		}
+		else {
+			xSpeed += baseFriction;
+			if (xSpeed >= 0) {
+				xSpeed = 0.0;
+			}
+		}
+	}
+	
+	if (!onGround)
+		ySpeed += gravity;
 	if (ySpeed > topYSpeed)
 	{
 		ySpeed = topYSpeed;
 	}
 
-	if (xSpeed > topXSpeed)
-	{
-		xSpeed = topXSpeed;
-	}
 
 	nextPos.x += xSpeed;
 	nextPos.y += ySpeed;
@@ -71,13 +87,41 @@ void Player::tick() {
 		//int i = nextPos.x;
 
 	time++;
+	xState = Idle;
 }
 
 void Player::left() {
-
+	if (!facingRight)
+	{
+		xSpeed -= xAccel;
+		if (xSpeed*-1 >= topRunSpeed) {
+			xSpeed = topRunSpeed*-1;
+		}
+	}
+	else
+	{
+		//if facing right
+		xSpeed -= xDecel;
+		if (xSpeed < 0)
+			facingRight = false;
+	}
+	xState = Running;
 }
-void Player::right()
-{
+void Player::right(){
+	if (facingRight)
+	{
+		xSpeed += xAccel;
+		if (xSpeed >= topRunSpeed) {
+			xSpeed = topRunSpeed;
+		}
+	}
+	else
+	{
+		xSpeed += xDecel;
+		if (xSpeed > 0)
+			facingRight = true;
+	}
+	xState = Running;
 }
 void Player::up() {
 
