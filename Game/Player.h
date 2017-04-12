@@ -41,6 +41,9 @@ public:
 	int getBBoxSizeX();
 	int getBBoxSizeY();
 	void isOnGround(bool b);
+
+	float getXSpeed();
+	float getYSpeed();
 	
 	void left();
 	void right();
@@ -70,7 +73,7 @@ private:
 
 	const float topRunSpeed = 6.0;
 	const float topWalkSpeed = 4.0;
-	const float jmp = -6.0;//-11.0;
+	const float jmp = -9.0;//-6
 	const float topWalkingSpeed = 3.0;
 	const float topXSpeed = 6.0;
 	const float topYSpeed = 2.0;//speed down 6 for kirby(at 30f/s), 16 for Sonic

@@ -142,8 +142,6 @@ bool Level::loadLevel(std::string levelName) {
 											}
 											*/
 										}
-
-
 										//createTile(i, j);
 										tileset[i][j] = new Tile(id, angle, water);
 										tileSet_[i][j].tile = new Tile(id, angle, water);
@@ -162,6 +160,9 @@ bool Level::loadLevel(std::string levelName) {
 
 									}
 									std::getline(file, tileText);
+									while (tileText.at(0) == '-') {
+										std::getline(file, tileText);
+									}
 								}
 							}
 						}
@@ -169,7 +170,6 @@ bool Level::loadLevel(std::string levelName) {
 						if (text == "0")
 						{
 							//pass to next tile
-							
 							state == levelAttributes::Tiles;
 						}
 
@@ -177,7 +177,6 @@ bool Level::loadLevel(std::string levelName) {
 					}
 					case levelAttributes::Dimensions:
 					{
-
 
 						if (text.find("width") != std::string::npos || text.find("lengh") != std::string::npos)
 						{
@@ -320,6 +319,9 @@ void Level::clearTile(int x, int y)
 
 bool **Level::getCollisionTiles(){
 	return colTileset;
+}
+
+void Level::debug(){
 }
 
 void Level::initColTileset(){

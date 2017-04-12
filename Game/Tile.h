@@ -13,9 +13,6 @@ public:
 	Tile(int tID, TileType ty = TileType::SolidBlock, double ang = 0.0, bool isItWater = false);
 	~Tile();
 
-	//sf::Sprite getTexture();
-	//void setTexture(sf::Texture t);
-	//void setSprite(sf::Sprite s);
 	void setAngle(double a);
 	double getAngle();
 	TileType getType();
@@ -23,7 +20,9 @@ public:
 	bool collidable(TileBound b);
 	int getID();
 	bool isWater();
-	
+	void setPosition(int x, int y);
+	int getPosX();
+	int getPosY();
 	
 	
 
@@ -33,6 +32,8 @@ private:
 	int tileID;
 	bool water;
 	TileType type;
+	int posX;
+	int posY;
 
 	/*Represents if there is a collision possible on those bounds*/
 	bool boundsUp, boundsDown, boundsLeft, boundsRight;//true means a collision is possible

@@ -115,9 +115,13 @@ void GameRenderer::_drawLevel() {
 		}
 		printf("\n");
 	}
-
+	float x = player->getPrevXPos();
+	float y = player->getPrevYPos();
+	printf("Player Pos: %3.3f - %3.3f \n", x, y);
+	printf("Tile :%3.0f - %3.0f of %d - %d \n", x / 16, y / 16, lvl->levelWidth-1, lvl->levelHeight-1);
+	printf("xSpeed: %3.4f    \n", player->getXSpeed());
+	printf("ySpeed: %3.4f    \n", player->getYSpeed());
 	/*Test*/
-
 
 }
 

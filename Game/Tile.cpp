@@ -54,6 +54,21 @@ bool Tile::isWater()
 	return water;
 }
 
+void Tile::setPosition(int x, int y)
+{
+	posX = x;
+	posY = y;
+}
+
+int Tile::getPosX()
+{
+	return posX;
+}
+int Tile::getPosY()
+{
+	return posY;
+}
+
 void Tile::setAngle(double a)
 {
 	angle = a;

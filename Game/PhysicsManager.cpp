@@ -33,7 +33,6 @@ void PhysicsManager::_handlePlayerPhysics(Player &p, Level &lvl) {
 			{
 				//if (t->isWater())
 				if (t->collidable(TileBound::West)) {
-
 						tempX = i * TILESIZE - bboxX;
 						/*Move aside*/
 						break;
@@ -41,7 +40,6 @@ void PhysicsManager::_handlePlayerPhysics(Player &p, Level &lvl) {
 				/*
 				t = lvl.getTile(i, pBounds.down / TILESIZE);
 				if (t->collidable(TileBound::West)) {
-
 					tempX = i * TILESIZE - bboxX;
 					//Move aside
 					break;
@@ -104,7 +102,6 @@ void PhysicsManager::_handlePlayerPhysics(Player &p, Level &lvl) {
 					/*Move aside*/
 					break;
 				}
-
 				/*
 				t = lvl.getTile(pBounds.left / TILESIZE, i);
 				if (t->collidable(TileBound::Top)) {

@@ -86,6 +86,17 @@ void Player::tick() {
 	//if (nextPos.x >= 200)
 		//int i = nextPos.x;
 
+	/*Put back to 0 if speed is close to 0*/
+	/*
+	if (xSpeed <= 0.001 && xSpeed >= -0.001)
+	{
+		xSpeed = 0.0000;
+	}
+	if (ySpeed <= 0.001 && ySpeed >= -0.001)
+	{
+		ySpeed = 0.0000;
+	}
+	*/
 	time++;
 	xState = Idle;
 }
@@ -224,4 +235,12 @@ int Player::getBBoxSizeY() {
 
 void Player::isOnGround(bool b) {
 	onGround = b;
+}
+
+float Player::getXSpeed() {
+	return xSpeed;
+}
+
+float Player::getYSpeed() {
+	return ySpeed;
 }
