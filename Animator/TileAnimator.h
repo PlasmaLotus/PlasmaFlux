@@ -1,5 +1,7 @@
+#ifndef __TileAnimator__
+#define __TileAnimator__
 
-#include "Y:\PlasmaFlux\src\Animator\Animator.h"
+#include "Animator.h"
 
 #include "SFML\Graphics.hpp"
 
@@ -25,3 +27,4 @@ private:
 
 };
 
+#endif

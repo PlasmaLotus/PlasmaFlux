@@ -32,7 +32,8 @@ private:
 
 	Player player;
 	int frame = 0;
-
+	int viewX = 15; //tiles
+	int viewY = 10; //tilesq
 	void render();
 };
 

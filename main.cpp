@@ -38,9 +38,8 @@ int main(int argc, char **argv) {
 	}
 	*/
 
-	StateManager stMng;
+	StateManager& stMng = StateManager::getInstance();
 	stMng.run();
-
 
 	return 0;
 }

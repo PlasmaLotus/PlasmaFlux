@@ -9,12 +9,25 @@ PhysicsManager::~PhysicsManager()
 }
 
 
+
+/**/
 void PhysicsManager::_handlePlayerPhysics(Player &p, Level &lvl) {
+	
 	Vec *pPos = p.getPrevPos();
 	Vec *nPos = p.getNextPos();
 
-	Bounds nBounds = p.getNextBounds();
-	Bounds pBounds = p.getPrevBounds();
+	Bounds *nBounds = p.getNextBoundsRaw();
+	Bounds *pBounds = p.getPrevBoundsRaw();
+	//float nBoundsUp = p.getNextBounds().up;
+	//float nBoundsDown = p.getNextBounds().down;
+	//float nBoundsLeft = p.getNextBounds().left;
+	//float nBoundsRight = p.getNextBounds().right;
+	//float pBoundsUp = p.getPrevBounds().up;
+	//float pBoundsDown = p.getPrevBounds().down;
+	//float pBoundsLeft = p.getPrevBounds().left;
+	//float pBoundsRight = p.getPrevBounds().right;
+
+
 
 	int bboxX = p.getBBoxSizeX();
 	int bboxY = p.getBBoxSizeY();
@@ -25,21 +38,24 @@ void PhysicsManager::_handlePlayerPhysics(Player &p, Level &lvl) {
 	/*For X Axis*/
 	if (nPos->x - pPos->x > 0)//if X change is Positif, if going right
 	{
-		for (int i = pBounds.right / TILESIZE; i <= nBounds.right / TILESIZE; i++)
+		for (int i = pBounds->right / TILESIZE; i <= nBounds->right / TILESIZE; i++)
 		{
 
-			Tile *t = lvl.getTile(i, pBounds.up / TILESIZE);
+			Tile *t = lvl.getTile(i, pBounds->up / TILESIZE);
 			if (t != NULL)
 			{
 				//if (t->isWater())
 				if (t->collidable(TileBound::West)) {
+
 						tempX = i * TILESIZE - bboxX;
 						/*Move aside*/
 						break;
 				}
+				//p2
 				/*
-				t = lvl.getTile(i, pBounds.down / TILESIZE);
+				t = lvl.getTile(i, pBounds->down / TILESIZE);
 				if (t->collidable(TileBound::West)) {
+
 					tempX = i * TILESIZE - bboxX;
 					//Move aside
 					break;
@@ -55,9 +71,9 @@ void PhysicsManager::_handlePlayerPhysics(Player &p, Level &lvl) {
 	}
 	else if (nPos->x - pPos->x < 0)//if X change is Positif, if going Left
 	{
-		for (int i = pBounds.left / TILESIZE; i >= nBounds.left / TILESIZE; i--)
+		for (int i = pBounds->left / TILESIZE; i >= nBounds->left / TILESIZE; i--)
 		{
-			Tile *t = lvl.getTile(i, pBounds.up / TILESIZE);
+			Tile *t = lvl.getTile(i, pBounds->up / TILESIZE);
 			if (t != NULL)
 			{
 				//if (t->isWater())
@@ -67,8 +83,9 @@ void PhysicsManager::_handlePlayerPhysics(Player &p, Level &lvl) {
 					/*Move aside*/
 					break;
 				}
+				//p2
 				/*
-				t = lvl.getTile(i, pBounds.down / TILESIZE);
+				t = lvl.getTile(i, pBounds->down / TILESIZE);
 				if (t->collidable(TileBound::East)) {
 
 					tempX = (i + 1) * TILESIZE;
@@ -88,10 +105,15 @@ void PhysicsManager::_handlePlayerPhysics(Player &p, Level &lvl) {
 	/*For Y AXIS*/
 	if (nPos->y - pPos->y > 0)//if Y change is Positif, if going down
 	{
-		for (int i = pBounds.down / TILESIZE; i <= nBounds.down / TILESIZE; i++)
+		for (int i = pBounds->down / TILESIZE; i <= nBounds->down / TILESIZE; i++)
 		{
 
-			Tile *t = lvl.getTile(pBounds.right / TILESIZE, i);
+			if (nBounds->down / 16 >= 15)
+			{
+				tic++;
+			}
+
+			Tile *t = lvl.getTile(pBounds->right / TILESIZE, i);
 			if (t != NULL)
 			{
 				//if (t->isWater())
@@ -102,8 +124,10 @@ void PhysicsManager::_handlePlayerPhysics(Player &p, Level &lvl) {
 					/*Move aside*/
 					break;
 				}
+
+				//p2
 				/*
-				t = lvl.getTile(pBounds.left / TILESIZE, i);
+				t = lvl.getTile(pBounds->left / TILESIZE, i);
 				if (t->collidable(TileBound::Top)) {
 
 					tempY = i* TILESIZE - bboxY;
@@ -112,6 +136,7 @@ void PhysicsManager::_handlePlayerPhysics(Player &p, Level &lvl) {
 					break;
 				}
 				*/
+				
 			}
 			else
 			{
@@ -122,10 +147,10 @@ void PhysicsManager::_handlePlayerPhysics(Player &p, Level &lvl) {
 	}
 	else if (nPos->y - pPos->y < 0)//if Y change is Negative, if going up
 	{
-		for (int i = pBounds.up / TILESIZE; i >= nBounds.up / TILESIZE; i--)
+		for (int i = pBounds->up / TILESIZE; i >= nBounds->up / TILESIZE; i--)
 		{
 
-			Tile *t = lvl.getTile(pBounds.right / TILESIZE, i);
+			Tile *t = lvl.getTile(pBounds->right / TILESIZE, i);
 			if (t != NULL)
 			{
 				//if (t->isWater())
@@ -135,8 +160,9 @@ void PhysicsManager::_handlePlayerPhysics(Player &p, Level &lvl) {
 					/*Move aside*/
 					break;
 				}
+				//p2
 				/*
-				t = lvl.getTile(pBounds.left / TILESIZE, i);
+				t = lvl.getTile(pBounds->left / TILESIZE, i);
 				if (t->collidable(TileBound::Bottom)) {
 
 				tempY = i*TILESIZE + (TILESIZE);
@@ -144,6 +170,7 @@ void PhysicsManager::_handlePlayerPhysics(Player &p, Level &lvl) {
 				break;
 				}
 				*/
+				
 			}
 			else
 			{
@@ -180,6 +207,7 @@ void PhysicsManager::handlePlayerPhysics(Player &p, Level &lvl){
 	Vec *pPos = p.getPrevPos();
 	Vec *nPos = p.getNextPos();
 
+	/**/
 	Bounds nBounds = p.getNextBounds();
 	Bounds pBounds = p.getPrevBounds();
 	int bboxX = p.getBBoxSizeX();
@@ -189,8 +217,8 @@ void PhysicsManager::handlePlayerPhysics(Player &p, Level &lvl){
 	float tempY = nPos->y;
 	//getBBoxSize
 	
-	/*For X Axis*/
-
+	
+	/*
 	if (tempX < 0)
 	{
 		tempX = 0;
@@ -207,8 +235,10 @@ void PhysicsManager::handlePlayerPhysics(Player &p, Level &lvl){
 	{
 		tempY = lvl.levelHeight*TILESIZE;
 	}
+	*/
 
-	if (nPos->x - pPos->x > 0)//if X change is Positif, if going right
+	/*For X Axis*/
+	if (nPos->x - pPos->x > 0)//if going right, if X change is Positive
 	{
 		for (int i = pBounds.right / TILESIZE; i <= nBounds.right / TILESIZE; i++)
 		{
@@ -230,7 +260,7 @@ void PhysicsManager::handlePlayerPhysics(Player &p, Level &lvl){
 			}
 		}
 	}
-	else if (nPos->x - pPos->x < 0)//if X change is Positif, if going Left
+	else if (nPos->x - pPos->x < 0)//if going Left, if X change is Negative
 	{
 		for (int i = pBounds.left / TILESIZE; i >= nBounds.left / TILESIZE; i--)
 		{
@@ -247,7 +277,7 @@ void PhysicsManager::handlePlayerPhysics(Player &p, Level &lvl){
 	}
 	
 	/*For Y AXIS*/
-	if (nPos->y - pPos->y > 0)//if Y change is Positif, if going down
+	if (nPos->y - pPos->y > 0)//if going down, if Y change is Positive
 	{
 		for (int i = pBounds.down / TILESIZE; i <= nBounds.down / TILESIZE; i++)
 		{
@@ -269,7 +299,7 @@ void PhysicsManager::handlePlayerPhysics(Player &p, Level &lvl){
 			}
 		}
 	}
-	else if (nPos->y - pPos->y < 0)//if Y change is Negative, if going up
+	else if (nPos->y - pPos->y < 0)//if going up, if Y change is Negative
 	{
 		for (int i = pBounds.up / TILESIZE; i >= nBounds.up/ TILESIZE; i--)
 		{
@@ -289,17 +319,17 @@ void PhysicsManager::handlePlayerPhysics(Player &p, Level &lvl){
 	{
 		tempX = 0;
 	}
-	if (tempX > lvl.levelWidth*TILESIZE)
+	if (tempX > lvl.levelWidth*TILESIZE - 1)
 	{
-		tempX = lvl.levelWidth*TILESIZE;
+		tempX = lvl.levelWidth*TILESIZE - 1;
 	}
 	if (tempY < 0)
 	{
 		tempY = 0;
 	}
-	if (tempY > lvl.levelHeight*TILESIZE)
+	if (tempY > lvl.levelHeight*TILESIZE - 1)
 	{
-		tempY = lvl.levelHeight*TILESIZE;
+		tempY = lvl.levelHeight*TILESIZE - 1;
 	}
 	p.setPosition(tempX, tempY);
 	p.tick();

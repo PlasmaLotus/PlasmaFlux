@@ -27,6 +27,10 @@ public:
 	bool getColTile(int x, int y);
 	bool **getCollisionTiles();
 	void debug();
+	//int getFullNbTiles();
+	//int getNbTilesVertical();
+	//int getNbTilesHorizontal();
+
 	
 	//enum TileType {NoTile, Solid, Slope, OneWay, Water, Ladder};
 	enum levelAttributes { Dimensions, ScrollLock, AutoScroll, Tiles };

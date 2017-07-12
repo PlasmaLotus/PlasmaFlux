@@ -9,7 +9,6 @@ struct Vec {
 struct Position {
 	int x, y;
 };
-
 struct Bounds {
 	int up, down, left, right;
 };
@@ -38,6 +37,8 @@ public:
 	float getPrevYPos();
 	Bounds getNextBounds();
 	Bounds getPrevBounds();
+	Bounds * getNextBoundsRaw();
+	Bounds * getPrevBoundsRaw();
 	int getBBoxSizeX();
 	int getBBoxSizeY();
 	void isOnGround(bool b);

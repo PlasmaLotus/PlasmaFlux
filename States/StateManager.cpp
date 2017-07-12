@@ -1,17 +1,26 @@
 #include "StateManager.h"
+#include "../States/StateManager.h"
 
-StateManager::StateManager():
+StateManager::StateManager() :
 	currentState(NULL)
+	//calculatedFrameRate(FPS)
 	//renderer(NULL)
 {
 	window.create(sf::VideoMode(240, 160), "PlasmaFlux");
 	currentState = new GameState(&window);
+	//calculatedFrameRate = 1;
 	///
 	//renderer = new GameRenderer(w, currentState->getGame());
 }
 
 StateManager::~StateManager()
 {
+	delete currentState;
+}
+
+StateManager& StateManager::getInstance() {
+	static StateManager instance;
+	return instance;
 }
 
 void StateManager::run()
@@ -25,6 +34,7 @@ void StateManager::run()
 	window.setFramerateLimit(FPS);//framerate
 	while (window.isOpen())
 	{
+		showFPS();
 		/*Manage Time Beta*/
 		if (frame == 32767) {
 			frame = 0;
@@ -60,7 +70,9 @@ void StateManager::run()
 			}
 		}
 
+		/**/
 		currentState->tick();
+		/**/
 		//renderer->render();
 
 		//printf("%d:%d  Frame: %d\n", minute, second, frame);
@@ -68,8 +80,24 @@ void StateManager::run()
 
 		
 		elapsed = current.getElapsedTime();
-
+		time += elapsed.asSeconds();
+		framesTime += 1;
+		if (time >= 1.0f) {
+			time -= 1.0f;
+			calculatedFrameRate = framesTime;
+			//calcFPS = framesTime;
+			framesTime = 0;
+		}
 	}
 
+	
+}
+void StateManager::showFPS() {
+	printf("FPS: %d\n", getFPS());
+}
 
+int StateManager::getFPS() {
+	return calculatedFrameRate;
+	//return FPS;
+	//return calcFPS;
 }

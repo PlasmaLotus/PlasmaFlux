@@ -196,11 +196,11 @@ Vec *Player::getPrevPos()
 }
 
 float Player::getPrevYPos() {
-	return prevPos.y;
+	return getPrevPos()->y;
 }
 
 float Player::getPrevXPos() {
-	return prevPos.x;
+	return getPrevPos()->x;
 }
 /*
 float Player::getUpBBoxPoint(){
@@ -217,7 +217,6 @@ Bounds Player::getNextBounds() {
 	b.up = nextPos.y;
 	return b;
 }
-
 Bounds Player::getPrevBounds() {
 	struct Bounds b;
 	b.left = prevPos.x;
@@ -226,6 +225,26 @@ Bounds Player::getPrevBounds() {
 	b.up = prevPos.y;
 	return b;
 }
+
+Bounds* Player::getNextBoundsRaw() {
+	struct Bounds b;
+	b.left = nextPos.x;
+	b.down = nextPos.y + boundingBoxSizeY - 1;
+	b.right = nextPos.x + boundingBoxSizeX - 1;
+	b.up = nextPos.y;
+	return &b;
+}
+Bounds* Player::getPrevBoundsRaw() {
+	struct Bounds b;
+	b.left = prevPos.x;
+	b.down = prevPos.y + boundingBoxSizeY - 1;
+	b.right = prevPos.x + boundingBoxSizeX - 1;
+	b.up = prevPos.y;
+	return &b;
+}
+
+
+
 int Player::getBBoxSizeX() {
 	return boundingBoxSizeX;
 }

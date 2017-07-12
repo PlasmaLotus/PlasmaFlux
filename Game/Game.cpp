@@ -10,7 +10,7 @@ Game::~Game() {
 void Game::init() {
 	//renderer;
 	level.loadLevel("assets/levels/debug.lvl");
-	player.init(32, 32);
+	player.init(32, 13*16);
 	//player.setPosition(32, 32);
 }
 Level *Game::getLevel()

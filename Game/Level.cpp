@@ -30,7 +30,6 @@ Level::~Level(){
 		}
 		free(tileset);
 		delete colTileset;
-
 		free(tileSet_);
 	}
 }
@@ -323,6 +322,8 @@ bool **Level::getCollisionTiles(){
 
 void Level::debug(){
 }
+
+
 
 void Level::initColTileset(){
 	colTileset = (bool**)malloc(levelHeight* sizeof(bool*));
