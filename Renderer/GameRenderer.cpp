@@ -13,7 +13,7 @@ window(NULL){
 	loadTextures();
 	//mainView = window->getDefaultView();
 	mainView.reset(sf::FloatRect(0, 0, originalWindowWidth, originalWindowHeight));
-	mainView.setViewport(sf::FloatRect(0, 0, 1, 1));
+	//mainView.setViewport(sf::FloatRect(0, 0, 1, 1));
 	//mainView.setViewport(sf::FloatRect(0.25f, 0.25, 0.5f, 0.5f));
 	window->setView(mainView);
 	//window->view
@@ -305,9 +305,11 @@ void GameRenderer::setCenter() {
 	else
 		centerY = posY;
 
-	//mainView.setCenter(sf::Vector2f( centerX, centerY ));
-	mainView.setCenter(sf::Vector2f(0, 0));
-	mainView.setSize(originalWindowWidth, originalWindowHeight);
+	mainView.setCenter(sf::Vector2f(centerX, centerY));
+	mainView.setViewport(sf::FloatRect(sf::Vector2f( centerX, centerY ), sf::Vector2f(originalWindowWidth, originalWindowHeight)));
+	//mainView.setCenter(sf::Vector2f(0, 0));
+	
+	//mainView.setSize(originalWindowWidth, originalWindowHeight);
 	//mainView.rotate(1.0f);
 	//mainView.setRotation(30.0f);
 	//mainView.setViewport(sf::FloatRect(0.25f, 0.25, 0.5f, 0.5f));
